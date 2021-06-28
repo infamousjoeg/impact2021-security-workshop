@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  conjur:
+    container_name: conjur
+    image: captainfluffytoes/csme:latest
+    networks: 
+      - conjur
+    restart: unless-stopped
+    security_opt: 
+      - seccomp:unconfined
+    ports:
+      - "443:443"
+      - "444:444"
+      - "5432:5432"
+      - "1999:1999"
+
+  cybr-cli:
+    container_name: cli
+    image: nfmsjoeg/cybr-cli:0.1.3-beta
+    networks: 
+      - conjur
+    restart: unless-stopped
+    entrypoint: sleep
+    command: infinity
+
+  lamp:
+    container_name: lamp
+    image: mattrayner/lamp:latest-1804
+    networks: 
+      - conjur
+    restart: unless-stopped
+    environment:
+      CONJUR_AUTHN_LOGIN: demoapp
+      CONJUR_AUTHN_API_KEY:
+      CONJUR_APPLIANCE_URL: https://conjur
+    volumes:
+      - ./opt/app:/app
+      - ./opt/mysql:/var/lib/mysql
+    ports:
+      - "80:80"
+      - "3306:3306"
+
+networks:
+  conjur:

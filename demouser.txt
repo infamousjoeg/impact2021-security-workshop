@@ -1,0 +1,9 @@
+{
+    "created_roles": {
+        "impact2021:user:demouser": {
+            "id": "impact2021:user:demouser",
+            "api_key": "4fph2b3ghqny83691b973stftwy2sr4yhq14h19pp2t44y5e2snz3q7"
+        }
+    },
+    "version": 1
+}

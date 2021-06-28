@@ -1,0 +1,19 @@
+- !user demouser
+
+- !policy
+  id: devapp
+  body:
+    - !group secret-users
+    - !variable db_uname
+    - !variable db_pass
+
+    - !permit
+      role: !group secret-users
+      privileges: [ read, execute ]
+      resources:
+        - !variable db_uname
+        - !variable db_pass
+
+- !grant
+  role: !group devapp/secret-users
+  member: !user demouser
